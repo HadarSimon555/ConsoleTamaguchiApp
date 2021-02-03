@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using ConsoleTamaguchiApp.WebServices;
+using ConsoleTamaguchiApp.DataTransferObjects;
+using System.Threading.Tasks;
 
 namespace ConsoleTamaguchiApp.ModelsUI
 {
@@ -14,36 +17,36 @@ namespace ConsoleTamaguchiApp.ModelsUI
         // פעולה המציגה את המסך למשתמש
         public override void Show()
         {
-            try
+            base.Show();
+            ObjectView showPlayer = new ObjectView("", UIMain.CurrentPlayer);
+            showPlayer.Show();
+            Console.WriteLine("Press A to see Player Animals or other key to go back!");
+            char c = Console.ReadKey().KeyChar;
+            if (c == 'a' || c == 'A')
             {
-                base.Show(); // ניקיון המסך והצגת הכותרת
-                ObjectView showPlayer = new ObjectView("", UIMain.CurrentPlayer); // אובייקט פרט המשתמש
-                showPlayer.Show(); // הצגת פרטי השחקן
-                Console.WriteLine("Press A to see Player Animals or other key to go back!");
-                char c = Console.ReadKey().KeyChar;
-                if (c == 'a' || c == 'A')
+                //Read first the animals of the player
+                Task<List<AnimalDTO>> t = UIMain.api.GetPlayerAnimalsAsync();
+                Console.WriteLine("Reading player anuimals...");
+                t.Wait();
+                List<AnimalDTO> list = t.Result;
+                if (list != null)
                 {
-                    Console.WriteLine();
                     //Create list to be displayed on screen
                     //Format the desired fields to be shown! (screen is not wide enough to show all)
-                    List<Object> animals = (from animalList in UIMain.CurrentPlayer.Animals
-                                            select new
-                                            {
-                                                ID = animalList.AnimalId,
-                                                Name = animalList.AnimalName,
-                                                BirthDate = animalList.AnimalCreateDay.ToString(),
-                                                Weight = $"{animalList.AnimalWeight:F2}",
-                                                Age = animalList.AnimalAge,
-                                            }).ToList<Object>();
-                    ObjectsList list = new ObjectsList("Animals", animals);
-                    list.Show();
+
+                    List<Object> animals = list.ToList<Object>();
+                    ObjectsList oList = new ObjectsList("Animals", animals);
+                    oList.Show();
                     Console.WriteLine();
-                    Console.ReadKey();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ooops something was wrong " + e.Message);
+                else
+                {
+                    Console.WriteLine("Animals coud not be read!");
+                }
+                Console.WriteLine();
+
+
+                Console.ReadKey();
             }
         }
     }

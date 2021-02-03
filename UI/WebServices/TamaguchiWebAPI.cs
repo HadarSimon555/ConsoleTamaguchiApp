@@ -85,5 +85,32 @@ namespace ConsoleTamaguchiApp.WebServices
             HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ChangePassword", content);
             return true;
         }
+
+        public async Task<List<AnimalDTO>> GetPlayerAnimalsAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAnimals");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<AnimalDTO> fList = JsonSerializer.Deserialize<List<AnimalDTO>>(content, options);
+                    return fList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
