@@ -21,7 +21,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
             // בדיקה האם הסיסמה תקינה והודעה בהתאם
             try
             {
-                Task<bool> changeTask = UIMain.api.ChangePasswordAsync(UIMain.CurrentPlayer, newPswd); // עדכון הסיסמה שנקלטה לשחקן הנוכחי
+                Task<bool> changeTask = UIMain.api.ChangePasswordAsync(newPswd); // עדכון הסיסמה שנקלטה לשחקן הנוכחי
                 changeTask.Wait();
                 bool change = changeTask.Result;
                 if (change)
