@@ -78,12 +78,21 @@ namespace ConsoleTamaguchiApp.WebServices
             }
         }
 
-        public async Task<bool> ChangePasswordAsync(PlayerDTO pd, string newPswd)
+        public async Task<bool> ChangePasswordAsync(string newPswd)
         {
-            string playerJson = JsonSerializer.Serialize(pd);
-            StringContent content = new StringContent(playerJson, Encoding.UTF8, "application/json");
+            string json = JsonSerializer.Serialize(newPswd);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ChangePassword", content);
-            return true;
+            if (response.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string res = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<bool>(res, options);
+            }
+            return false;
         }
 
         public async Task<List<AnimalDTO>> GetPlayerAnimalsAsync()
