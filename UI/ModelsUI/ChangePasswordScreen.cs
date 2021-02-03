@@ -22,6 +22,8 @@ namespace ConsoleTamaguchiApp.ModelsUI
             try
             {
                 Task<bool> changeTask = UIMain.api.ChangePasswordAsync(newPswd); // עדכון הסיסמה שנקלטה לשחקן הנוכחי
+                Console.WriteLine("Password changing is in progress...");
+                Console.WriteLine("May take a few seconds...");
                 changeTask.Wait();
                 bool change = changeTask.Result;
                 if (change)
