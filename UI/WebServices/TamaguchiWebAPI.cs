@@ -25,6 +25,7 @@ namespace ConsoleTamaguchiApp.WebServices
             this.baseUri = baseUri;
         }
 
+        #region GetPlayerActiveAnimalAsync
         public async Task<AnimalDTO> GetPlayerActiveAnimalAsync()
         {
             try
@@ -52,7 +53,9 @@ namespace ConsoleTamaguchiApp.WebServices
                 return null;
             }
         }
+        #endregion
 
+        #region LoginAsync
         public async Task<PlayerDTO> LoginAsync(PlayerDTO pd)
         {
             try
@@ -77,7 +80,9 @@ namespace ConsoleTamaguchiApp.WebServices
                 return null;
             }
         }
+        #endregion
 
+        #region ChangePasswordAsync
         public async Task<bool> ChangePasswordAsync(string newPswd)
         {
             string json = JsonSerializer.Serialize(newPswd);
@@ -94,7 +99,9 @@ namespace ConsoleTamaguchiApp.WebServices
             }
             return false;
         }
+        #endregion
 
+        #region GetPlayerAnimalsAsync
         public async Task<List<AnimalDTO>> GetPlayerAnimalsAsync()
         {
             try
@@ -121,7 +128,9 @@ namespace ConsoleTamaguchiApp.WebServices
                 return null;
             }
         }
+        #endregion
 
+        #region CreateAnimalAsync
         public async Task<AnimalDTO> CreateAnimalAsync(string animalName)
         {
             try
@@ -147,5 +156,6 @@ namespace ConsoleTamaguchiApp.WebServices
                 return null;
             }
         }
+        #endregion
     }
 }
