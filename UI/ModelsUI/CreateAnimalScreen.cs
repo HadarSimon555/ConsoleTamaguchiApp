@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using ConsoleTamaguchiApp.DataTransferObjects;
+using System.Threading.Tasks;
 
 namespace ConsoleTamaguchiApp.ModelsUI
 {
@@ -19,10 +20,15 @@ namespace ConsoleTamaguchiApp.ModelsUI
             string animalName = Console.ReadLine();
             try
             {
-                AnimalDTO animal = UIMain.api.Animals.CreateProxy(animalName);
-                UIMain.CurrentPlayer.Animals.Add(animal);
-                UIMain.api.SaveChanges();
-                Console.WriteLine("Added animal successfully!");
+                Task<AnimalDTO> animal = UIMain.api.CreateAnimalAsync(animalName);
+                Console.WriteLine("The creation of the animal is carried out...");
+                Console.WriteLine("May take a few seconds...");
+                animal.Wait();
+                AnimalDTO a = animal.Result;
+                if (a != null)
+                    Console.WriteLine("Added animal successfully!");
+                else
+                    Console.WriteLine("Added animal faild!");
                 Console.ReadKey();
             }
             catch (Exception e)

@@ -121,5 +121,31 @@ namespace ConsoleTamaguchiApp.WebServices
                 return null;
             }
         }
+
+        public async Task<AnimalDTO> CreateAnimalAsync(string animalName)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(animalName);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/CreateAnimal", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string responseJson = JsonSerializer.Serialize(response);
+                    AnimalDTO a = JsonSerializer.Deserialize<AnimalDTO>(responseJson);
+                    return a;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
