@@ -58,6 +58,8 @@ namespace ConsoleTamaguchiApp.ModelsUI
                     };
                     // חיבור המשתמש למערכת
                     Task<PlayerDTO> p = UIMain.api.LoginAsync(pDTO);
+                    Console.WriteLine("Login is in progress...");
+                    Console.WriteLine("May take a few seconds...");
                     p.Wait();
                     pDTO = p.Result;
                     UIMain.CurrentPlayer = pDTO;
