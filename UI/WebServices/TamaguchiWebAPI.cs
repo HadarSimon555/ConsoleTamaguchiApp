@@ -188,7 +188,7 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region GetActionsListAsync
-        public async List<Task<Action>> GetActionsListAsync(ActionTypeDTO type)
+        public async Task<List<ActionDTO>> GetActionsListAsync(ActionTypeDTO type)
         {
             try
             {
@@ -200,8 +200,8 @@ namespace ConsoleTamaguchiApp.WebServices
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    ActionTypeDTO actionType = JsonSerializer.Deserialize<ActionTypeDTO>(content, options);
-                    return actionType;
+                    List<ActionDTO> aList = JsonSerializer.Deserialize<List<ActionDTO>>(content, options);
+                    return aList;
                 }
                 else
                 {
