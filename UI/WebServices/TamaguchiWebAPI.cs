@@ -163,7 +163,7 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionType?action={actionTypeName}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionType?actionTypeName={actionTypeName}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -192,7 +192,7 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionsList?action={type}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionsList?actionTypeDTO={type}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -215,5 +215,35 @@ namespace ConsoleTamaguchiApp.WebServices
             }
         }
         #endregion
+
+        #region GetAction
+        public async Task<List<ActionDTO>> GetAction(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionsList?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<ActionDTO> aList = JsonSerializer.Deserialize<List<ActionDTO>>(content, options);
+                    return aList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
     }
 }

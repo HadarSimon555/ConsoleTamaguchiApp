@@ -25,14 +25,19 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 actionTypeTask.Wait();
                 ActionTypeDTO actionType = actionTypeTask.Result;
 
-                List<object> listActions = actionType.GetActions().ToList<object>(); // קבלת הפעולות שניתן לבצע על החיה לתוך רשימה
+                Task<List<ActionDTO>> actionListTask = UIMain.api.GetActionsListAsync(actionType);
+                Console.WriteLine("May take a few seconds...");
+                actionTypeTask.Wait();
+                List<ActionDTO> actionList = actionListTask.Result;
+
+                List<object> listActions = actionList.ToList<object>(); // קבלת הפעולות שניתן לבצע על החיה לתוך רשימה
                 ObjectsList objList = new ObjectsList("Actions", listActions); // בניית טבלת פעולות שניתן לבצע על החיה
                 objList.Show(); // הצגת הפעולות שניתן לבצע לחיה למשתמש
                 Console.WriteLine();
                 // קליטה מהמשתמש את הפעולה אותה הוא רוצה לבצע לחיה
                 Console.WriteLine("Choose what do you want to feed your tamagotchi: ");
                 int id = int.Parse(Console.ReadLine());
-                Action action = actionType.GetAction(id); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
+                ActionDTO action = actionType.GetAction(id); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
                                                           // מסננת קלט לבדוק שבאמת חזרה פעולה
                 while (action == null)
                 {
