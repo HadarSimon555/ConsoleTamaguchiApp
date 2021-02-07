@@ -7,6 +7,7 @@ namespace ConsoleTamaguchiApp.DataTransferObjects
     public class ActionTypeDTO
     {
         public int ActionTypeId { get; set; }
+        public string ActionTypeName { get; set; }
         public ActionTypeDTO() { }
         
     }
