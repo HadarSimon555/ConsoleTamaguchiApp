@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using ConsoleTamaguchiApp.DataTransferObjects;
+using System.Threading.Tasks;
 
 namespace ConsoleTamaguchiApp.ModelsUI
 {
@@ -18,7 +19,11 @@ namespace ConsoleTamaguchiApp.ModelsUI
             try
             {
                 base.Show(); // ניקיון המסך והצגת הכותרת
-                ActionType actionType = UIMain.api.GetActionType("Playing"); // בניית אוביקט הפעולה
+                Task<ActionTypeDTO> actionTypeTask = UIMain.api.GetActionTypeAsync("Playing"); // בניית אוביקט הפעולה
+                Console.WriteLine("May take a few seconds...");
+                actionTypeTask.Wait();
+                ActionTypeDTO actionType = actionTypeTask.Result;
+
                 List<object> listActions = actionType.GetActions().ToList<object>(); // קבלת הפעולות שניתן לבצע על החיה לתוך רשימה
                 ObjectsList objList = new ObjectsList("Actions", listActions); // בניית טבלת פעולות שניתן לבצע על החיה
                 objList.Show(); // הצגת הפעולות שניתן לבצע לחיה למשתמש

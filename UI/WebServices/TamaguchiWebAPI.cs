@@ -159,11 +159,40 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region GetActionTypeAsync
-        public async Task<ActionTypeDTO> GetActionTypeAsync(string action)
+        public async Task<ActionTypeDTO> GetActionTypeAsync(string actionTypeName)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAction?action={action}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionType?action={actionTypeName}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ActionTypeDTO actionType = JsonSerializer.Deserialize<ActionTypeDTO>(content, options);
+                    return actionType;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        #region GetActionsListAsync
+        public async List<Task<Action>> GetActionsListAsync(ActionTypeDTO type)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActionsList?action={type}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
