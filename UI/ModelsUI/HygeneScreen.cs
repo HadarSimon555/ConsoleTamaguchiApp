@@ -33,19 +33,32 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 ObjectsList objList = new ObjectsList("Actions", listActions); // בניית טבלת פעולות שניתן לבצע על החיה
                 objList.Show(); // הצגת הפעולות שניתן לבצע לחיה למשתמש
                 Console.WriteLine();
+
                 // קליטה מהמשתמש את הפעולה אותה הוא רוצה לבצע לחיה
                 Console.WriteLine("Choose how do you want to clean your tamagotchi: ");
                 int id = int.Parse(Console.ReadLine());
-                ActionDTO action = actionType.GetAction(id); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
-                                                          // מסננת קלט לבדוק שבאמת חזרה פעולה
+                Task<ActionDTO> actionTask = UIMain.api.GetActionAsync(id); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
+                Console.WriteLine("May take a few seconds...");
+                actionTask.Wait();
+                ActionDTO action = actionTask.Result;
+
+                // מסננת קלט לבדוק שבאמת חזרה פעולה
                 while (action == null)
                 {
                     Console.WriteLine("The id is invalid! Please type again: ");
                     id = int.Parse(Console.ReadLine());
-                    action = actionType.GetAction(id);
+                    actionTask = UIMain.api.GetActionAsync(id); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
+                    Console.WriteLine("May take a few seconds...");
+                    actionTask.Wait();
+                    action = actionTask.Result;
                 }
-                AnimalDTO animal = UIMain.CurrentPlayer.GetActiveAnimal(); // קבלת החיה הפעילה של השחקן הנוכחי
-                animal.CleanAnimal(action); // ניקיון החיה
+
+                Task<AnimalDTO> aDTO = UIMain.api.GetPlayerActiveAnimalAsync(); // קבלת החיה הפעילה של השחקן הנוכחי
+                Console.WriteLine("May take a few seconds...");
+                aDTO.Wait();
+                AnimalDTO currentAnimal = aDTO.Result;
+
+                currentAnimal.CleanAnimal(action); // ניקיון החיה
                 Console.WriteLine("Action managed successfully!");
                 Console.ReadKey();
             }

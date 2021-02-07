@@ -80,6 +80,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
             // בדיקה אם לשחקן יש חיות פעילות והעברתו למסך מתאים
 
             Task<AnimalDTO> aDTO = UIMain.api.GetPlayerActiveAnimalAsync();
+            Console.WriteLine("May take a few seconds...");
             aDTO.Wait();
             AnimalDTO currentAnimal = aDTO.Result;
             if (currentAnimal != null)
