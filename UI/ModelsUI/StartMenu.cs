@@ -11,7 +11,6 @@ namespace ConsoleTamaguchiApp.ModelsUI
         public StartMenu() : base($"Start Screen - Do you want to log in or register?")
         {
             AddItem("Log in", new LoginScreen()); //בניית מסך ההתחברות
-            AddItem("Register", new RegisterScreen()); // בניית מסך ההרשמה
         }
     }
 }
