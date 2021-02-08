@@ -245,9 +245,9 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region FeedAnimalAsync
-        public async Task<bool> FeedAnimalAsync(AnimalDTO animal)
+        public async Task<bool> FeedAnimalAsync(ActionDTO action)
         {
-            string json = JsonSerializer.Serialize(animal);
+            string json = JsonSerializer.Serialize(action);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/FeedAnimal", content);
             if (response.IsSuccessStatusCode)
@@ -264,9 +264,9 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region CleanAnimalAsync
-        public async Task<bool> CleanAnimalAsync(AnimalDTO animal)
+        public async Task<bool> CleanAnimalAsync(ActionDTO action)
         {
-            string json = JsonSerializer.Serialize(animal);
+            string json = JsonSerializer.Serialize(action);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/CleanAnimal", content);
             if (response.IsSuccessStatusCode)
@@ -283,9 +283,9 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region PlayWithAnimalAsync
-        public async Task<bool> PlayWithAnimalAsync(AnimalDTO animal)
+        public async Task<bool> PlayWithAnimalAsync(ActionDTO action)
         {
-            string json = JsonSerializer.Serialize(animal);
+            string json = JsonSerializer.Serialize(action);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/PlayWithAnimal", content);
             if (response.IsSuccessStatusCode)
