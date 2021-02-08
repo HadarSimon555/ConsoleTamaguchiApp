@@ -243,5 +243,62 @@ namespace ConsoleTamaguchiApp.WebServices
             }
         }
         #endregion
+
+        #region FeedAnimalAsync
+        public async Task<bool> FeedAnimalAsync(AnimalDTO animal)
+        {
+            string json = JsonSerializer.Serialize(animal);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/FeedAnimal", content);
+            if (response.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string res = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<bool>(res, options);
+            }
+            return false;
+        }
+        #endregion
+
+        #region CleanAnimalAsync
+        public async Task<bool> CleanAnimalAsync(AnimalDTO animal)
+        {
+            string json = JsonSerializer.Serialize(animal);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/CleanAnimal", content);
+            if (response.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string res = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<bool>(res, options);
+            }
+            return false;
+        }
+        #endregion
+
+        #region PlayWithAnimalAsync
+        public async Task<bool> PlayWithAnimalAsync(AnimalDTO animal)
+        {
+            string json = JsonSerializer.Serialize(animal);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/PlayWithAnimal", content);
+            if (response.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string res = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<bool>(res, options);
+            }
+            return false;
+        }
+        #endregion
     }
 }
