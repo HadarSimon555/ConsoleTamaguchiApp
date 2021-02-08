@@ -59,8 +59,15 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 aDTO.Wait();
                 AnimalDTO currentAnimal = aDTO.Result;
 
-                currentAnimal.FeedAnimal(action); // האכלת החיה
-                Console.WriteLine("Action managed successfully!");
+                Task<bool> feedTask = UIMain.api.FeedAnimalAsync(currentAnimal); // קבלת החיה הפעילה של השחקן הנוכחי
+                Console.WriteLine("Your animal is eating, please wait a few seconds...");
+                feedTask.Wait();
+                bool feed = feedTask.Result;
+
+                if(feed)
+                    Console.WriteLine("Action managed successfully!");
+                else
+                    Console.WriteLine("OOps, something went wrong...");
                 Console.ReadKey();
             }
             catch (Exception e)

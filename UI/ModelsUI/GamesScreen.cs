@@ -58,8 +58,15 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 aDTO.Wait();
                 AnimalDTO currentAnimal = aDTO.Result;
 
-                currentAnimal.PlayWithAnimal(action); // משחק עם החיה
-                Console.WriteLine("Action managed successfully!");
+                Task<bool> playTask = UIMain.api.PlayWithAnimalAsync(currentAnimal); // קבלת החיה הפעילה של השחקן הנוכחי
+                Console.WriteLine("Your animal is playing, please wait a few seconds...");
+                playTask.Wait();
+                bool play = playTask.Result;
+
+                if (play)
+                    Console.WriteLine("Action managed successfully!");
+                else
+                    Console.WriteLine("OOps, something went wrong...");
                 Console.ReadKey();
             }
 
