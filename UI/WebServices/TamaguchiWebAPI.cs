@@ -30,7 +30,7 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAnimals");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivePlayerAnimals");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -38,8 +38,7 @@ namespace ConsoleTamaguchiApp.WebServices
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    List<AnimalDTO> fList = JsonSerializer.Deserialize<List<AnimalDTO>>(content, options);
-                    AnimalDTO aDTO = fList.Where(a => a.OverallStatusId != 4).FirstOrDefault();
+                    AnimalDTO aDTO = JsonSerializer.Deserialize<AnimalDTO>(content, options);
                     return aDTO;
                 }
                 else
@@ -244,6 +243,5 @@ namespace ConsoleTamaguchiApp.WebServices
             }
         }
         #endregion
-
     }
 }
