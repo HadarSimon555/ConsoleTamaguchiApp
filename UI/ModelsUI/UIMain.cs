@@ -20,7 +20,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
         public void ApplicationStart()
         {
             //Initialize web api
-            api = new TamaguchiWebAPI(@"https://localhost:44311/api");
+            api = new TamaguchiWebAPI(@"https://localhost:44338/api");
             CurrentPlayer = null;
             //Show Screen and start app!
             initialScreen.Show();

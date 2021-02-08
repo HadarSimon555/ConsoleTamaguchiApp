@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace ConsoleTamaguchiApp.ModelsUI
 {
+
     class ObjectsList : Screen
     {
         protected ICollection<Object> data;
@@ -64,3 +65,4 @@ namespace ConsoleTamaguchiApp.ModelsUI
         }
     }
 }
+
