@@ -30,7 +30,7 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivePlayerAnimals");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetActivePlayerAnimal");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -216,11 +216,11 @@ namespace ConsoleTamaguchiApp.WebServices
         #endregion
 
         #region GetActionAsync
-        public async Task<ActionDTO> GetActionAsync(int id)
+        public async Task<ActionDTO> GetActionAsync(int id, ActionTypeDTO actionTypeDTO)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAction?id={id}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAction?id={id}&actionTypeDTO{actionTypeDTO}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

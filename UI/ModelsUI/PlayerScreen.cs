@@ -41,7 +41,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 }
                 else
                 {
-                    Console.WriteLine("Animals coud not be read!");
+                    Console.WriteLine("Animals could not be read!");
                 }
                 Console.WriteLine();
 
