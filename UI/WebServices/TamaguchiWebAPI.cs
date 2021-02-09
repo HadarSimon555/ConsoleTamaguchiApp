@@ -59,19 +59,19 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                string playerJson = JsonSerializer.Serialize(pd);
-                StringContent content = new StringContent(playerJson, Encoding.UTF8, "application/json");
+                string json = JsonSerializer.Serialize(pd);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/Login", content);
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseJson = JsonSerializer.Serialize(response);
-                    PlayerDTO p = JsonSerializer.Deserialize<PlayerDTO>(responseJson);
-                    return p;
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string res = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<PlayerDTO>(res, options);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
             catch (Exception e)
             {
@@ -143,9 +143,8 @@ namespace ConsoleTamaguchiApp.WebServices
                     {
                         PropertyNameCaseInsensitive = true
                     };
-                    string responseJson = JsonSerializer.Serialize(response);
-                    AnimalDTO a = JsonSerializer.Deserialize<AnimalDTO>(responseJson);
-                    return a;
+                    string res = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<AnimalDTO>(res, options);
                 }
                 return null;
             }
