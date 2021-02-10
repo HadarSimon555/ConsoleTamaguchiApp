@@ -37,20 +37,14 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 // קליטה מהמשתמש את הפעולה אותה הוא רוצה לבצע לחיה
                 Console.WriteLine("Choose what do you want to play with your tamagotchi: ");
                 int id = int.Parse(Console.ReadLine());
-                Task<ActionDTO> actionTask = UIMain.api.GetActionAsync(id, actionType); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
-                Console.WriteLine("May take a few seconds...");
-                actionTask.Wait();
-                ActionDTO action = actionTask.Result;
+                ActionDTO action = actionList.Where(p => p.ActionId == id).FirstOrDefault();
 
                 // מסננת קלט לבדוק שבאמת חזרה פעולה
                 while (action == null)
                 {
                     Console.WriteLine("The id is invalid! Please type again: ");
                     id = int.Parse(Console.ReadLine());
-                    actionTask = UIMain.api.GetActionAsync(id, actionType); // קבלת הפעולה לתוך משתנה לפי המספר שנקלט
-                    Console.WriteLine("May take a few seconds...");
-                    actionTask.Wait();
-                    action = actionTask.Result;
+                    action = actionList.Where(p => p.ActionId == id).FirstOrDefault();
                 }
 
                 Task<bool> playTask = UIMain.api.PlayWithAnimalAsync(action);
