@@ -299,5 +299,30 @@ namespace ConsoleTamaguchiApp.WebServices
             return false;
         }
         #endregion
+
+        #region LogOut
+        public async Task<bool> LogOutAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.DeleteAsync($"{this.baseUri}/LogOut");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string res = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<bool>(res, options);
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
