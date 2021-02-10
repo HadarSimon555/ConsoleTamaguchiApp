@@ -43,6 +43,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
                 while (action == null)
                 {
                     Console.WriteLine("The id is invalid! Please type again: ");
+                    id = int.Parse(Console.ReadLine());
                     action = actionList.Where(p => p.ActionId == id).FirstOrDefault();
                 }
 
