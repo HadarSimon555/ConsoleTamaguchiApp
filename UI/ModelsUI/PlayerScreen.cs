@@ -24,9 +24,10 @@ namespace ConsoleTamaguchiApp.ModelsUI
             char c = Console.ReadKey().KeyChar;
             if (c == 'a' || c == 'A')
             {
+                Console.WriteLine();
                 //Read first the animals of the player
                 Task<List<AnimalDTO>> t = UIMain.api.GetPlayerAnimalsAsync();
-                Console.WriteLine("Reading player anuimals...");
+                Console.WriteLine("Reading player animals...");
                 t.Wait();
                 List<AnimalDTO> list = t.Result;
                 if (list != null)

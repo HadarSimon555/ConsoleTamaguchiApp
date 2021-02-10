@@ -16,7 +16,6 @@ namespace ConsoleTamaguchiApp.DataTransferObjects
         public int AnimalHungerLevel { get; set; }
         public int AnimalHygieneLevel { get; set; }
         public int AnimalHappinessLevel { get; set; }
-        public int? OverallStatusId { get; set; }
         public AnimalDTO() { }
     }
 }
