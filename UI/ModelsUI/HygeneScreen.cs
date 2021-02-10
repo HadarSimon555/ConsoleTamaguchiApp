@@ -47,7 +47,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
                     action = actionList.Where(p => p.ActionId == id).FirstOrDefault();
                 }
 
-                Task<bool> cleanTask = UIMain.api.FeedAnimalAsync(action);
+                Task<bool> cleanTask = UIMain.api.CleanAnimalAsync(action);
                 Console.WriteLine("Your animal is being cleaned right now, please wait a few seconds...");
                 cleanTask.Wait();
                 bool clean = cleanTask.Result;

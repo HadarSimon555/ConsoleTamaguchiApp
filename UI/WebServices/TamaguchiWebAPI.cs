@@ -276,7 +276,7 @@ namespace ConsoleTamaguchiApp.WebServices
         {
             try
             {
-                HttpResponseMessage response = await this.client.DeleteAsync($"{this.baseUri}/LogOut");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/LogOut");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

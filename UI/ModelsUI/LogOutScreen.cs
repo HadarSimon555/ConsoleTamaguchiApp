@@ -25,7 +25,10 @@ namespace ConsoleTamaguchiApp.ModelsUI
                     logOutTask.Wait();
                     bool logOut = logOutTask.Result;
                     if (logOut)
+                    {
+                        UIMain.CurrentPlayer = null;
                         Console.WriteLine("You are successfully logged out");
+                    } 
                     else
                         Console.WriteLine("Log out failed!!!");
                 }
