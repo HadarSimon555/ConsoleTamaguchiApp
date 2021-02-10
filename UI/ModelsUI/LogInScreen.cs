@@ -66,7 +66,7 @@ namespace ConsoleTamaguchiApp.ModelsUI
                     // במידה וההתחברות נכשלה
                     if (UIMain.CurrentPlayer == null)
                     {
-                        Console.WriteLine("Login fail!! Press any key to try again!");
+                        Console.WriteLine("Log in fail!! Press any key to try again!");
                         Console.ReadKey();
                     }
                 }

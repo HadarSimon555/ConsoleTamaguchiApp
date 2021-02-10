@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleTamaguchiApp.ModelsUI
 {
@@ -19,8 +20,14 @@ namespace ConsoleTamaguchiApp.ModelsUI
                              // רק במידה ויש משתמש מחובר- ניתוקו מהמערכת
                 if (UIMain.CurrentPlayer != null)
                 {
-                    UIMain.CurrentPlayer = null;
-                    Console.WriteLine("You are successfully logged out");
+                    Task<bool> logOutTask = UIMain.api.LogOutAsync();
+                    Console.WriteLine("logged out...");
+                    logOutTask.Wait();
+                    bool logOut = logOutTask.Result;
+                    if (logOut)
+                        Console.WriteLine("You are successfully logged out");
+                    else
+                        Console.WriteLine("Log out failed!!!");
                 }
                 else // אחרת- הדפסת הודעה מתאימה
                     Console.WriteLine("You are not logged in");
